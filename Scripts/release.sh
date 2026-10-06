@@ -27,15 +27,9 @@ echo "Building Signa $VERSION"
 Scripts/build-app.sh
 codesign --verify --strict --verbose=1 "$APP"
 
-# A disk image holding the app and a shortcut to Applications, so installing
-# is one drag.
+# The disk image, laid out for installing (see package-dmg.sh).
 echo "Packaging"
-STAGE="$(mktemp -d)"
-cp -R "$APP" "$STAGE/"
-ln -s /Applications "$STAGE/Applications"
-rm -f "$DMG"
-hdiutil create -quiet -volname "Signa" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
-rm -rf "$STAGE"
+Scripts/package-dmg.sh "$APP" "$DMG"
 codesign --timestamp --sign "$SIGNA_SIGNING_IDENTITY" "$DMG"
 
 # Apple scans the image and records its verdict; stapling attaches that
