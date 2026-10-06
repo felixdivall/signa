@@ -48,7 +48,10 @@ Signa works within what macOS allows, and says so when it cannot do something.
 
 ## Download
 
-There is no packaged download yet. Until there is, build it yourself.
+[Download Signa](https://github.com/felixdivall/signa/releases/latest/download/Signa.dmg)
+for macOS 14 or later on Apple silicon. Open the disk image and drag Signa to
+Applications. It is signed and notarized, so it opens like any other app.
+Every version is on the [releases page](https://github.com/felixdivall/signa/releases).
 
 ## Build and run
 
@@ -66,11 +69,10 @@ git) and signs the app with it. macOS ties the permissions you grant to the
 app's signature, so a stable signature keeps them from one build to the next.
 Deleting `.signing/` gives the app a new identity, and you grant them again.
 
-To distribute, sign with a Developer ID and notarize:
-
-```sh
-SIGNA_SIGNING_IDENTITY="Developer ID Application: …" Scripts/build-app.sh
-```
+To make a release, `Scripts/release.sh` builds, signs with a Developer ID,
+notarizes and writes `build/Signa.dmg`. It needs the certificate in the
+keychain and a notarization login stored with `xcrun notarytool
+store-credentials`; the script's header says which.
 
 For development, `SIGNA_DATA_DIRECTORY=/some/folder` makes Signa use a throwaway
 library and leave the Mac's login items alone.

@@ -23,7 +23,9 @@ cp Resources/Info.plist "$APP/Contents/Info.plist"
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 
 if [ -n "${SIGNA_SIGNING_IDENTITY:-}" ]; then
-    codesign --force --options runtime --sign "$SIGNA_SIGNING_IDENTITY" "$APP"
+    # The timestamp is what lets the signature outlive the certificate; Apple
+    # will not notarize without it.
+    codesign --force --options runtime --timestamp --sign "$SIGNA_SIGNING_IDENTITY" "$APP"
 else
     KEYCHAIN="$PWD/.signing/signa-dev.keychain-db"
     PASSWORD="signa-dev"
