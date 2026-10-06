@@ -118,8 +118,19 @@ final class LibraryViewModel {
         panel.title = "Choose an Icon"
         panel.prompt = "Choose"
         panel.allowedContentTypes = DroppedItem.imageTypes
+        // Open panels share one memory of the last folder, and the app chooser
+        // resets it to /Applications every time. Icons live somewhere else, so
+        // this panel keeps its own.
+        panel.directoryURL = Self.iconFolder
         guard panel.runModal() == .OK, let url = panel.url else { return }
+        Self.iconFolder = url.deletingLastPathComponent()
         stageIcon(from: url, for: app.id)
+    }
+
+    /// Where the last icon was chosen from.
+    private static var iconFolder: URL? {
+        get { UserDefaults.standard.url(forKey: "IconFolder") }
+        set { UserDefaults.standard.set(newValue, forKey: "IconFolder") }
     }
 
     @discardableResult
