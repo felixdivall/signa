@@ -37,9 +37,9 @@ func draw(scale: CGFloat) -> NSBitmapImageRep {
     let paper = CGGradient(colorsSpace: space, colors: [rgb(0xF6F0E8), rgb(0xECE3D8)] as CFArray, locations: [0, 1])!
     cg.drawLinearGradient(paper, start: .zero, end: CGPoint(x: 0, y: size.height), options: [])
 
-    // The glaze's warmth, pooled faintly behind the app. Enough to tie the
+    // The icon's colour, pooled faintly behind the app. Enough to tie the
     // picture to the icon, not enough to read as a spotlight.
-    let glow = CGGradient(colorsSpace: space, colors: [rgb(0xCC5F34, 0.16), rgb(0xCC5F34, 0)] as CFArray, locations: [0, 1])!
+    let glow = CGGradient(colorsSpace: space, colors: [rgb(0xF06A3C, 0.16), rgb(0xF06A3C, 0)] as CFArray, locations: [0, 1])!
     cg.drawRadialGradient(glow, startCenter: CGPoint(x: appX, y: iconY), startRadius: 0,
                           endCenter: CGPoint(x: appX, y: iconY), endRadius: 190, options: [])
 
